@@ -1,0 +1,75 @@
+Name : Mihir Jewalikar
+Roll no. : 170387
+Homework : 4
+Question : 1
+
+We need to prove that maybe  follows 3 monad laws
+1)Right Identity
+2)Left Identity
+3)Associativity
+
+Monad functions for the maybe monad are:
+1)return x = Just x
+It has the following type: (:t return will give below result)
+        return :: a -> Maybe a
+        
+b)m >>= f = case m of
+                      Just x -> f x
+                      Nothing -> Nothing
+It has the following type:    
+        (>>=) :: Maybe a -> (a -> Maybe b) -> Maybe b
+        
+
+Proving monad laws:
+1)Right identity
+--> (m >>= return) = m
+Proof:
+    case1: m = Nothing,
+  =>   L.H.S  = Nothing >>= return       (using m = Nothing)
+            = Nothing               
+            = m
+            = R.H.S
+    case2: m = Just a,
+  =>    L.H.S = Just a >>= return        (using m = Just a)
+            = return a              
+            = Just a 
+            =m
+            = R.H.S
+ So,
+ L.H.S = R.H.S for both cases
+ Hence, Proved.
+
+2)Left identity
+--> (return a >>= f) = (f a)
+Proof:
+    LHS = return a >>= f
+        = Just a >>= f      
+        = f a               
+        = RHS
+ So,
+ L.H.S = R.H.S 
+ Hence, Proved.
+
+
+3)Associativity
+--> ((m >>= f) >>= g) = (m >>= (\x -> f x >>= g))
+Proof:
+    case1: m = Nothing,
+  =>    L.H.S = (Nothing >>= f) >>= g             (using m = Nothing)
+            = Nothing >>= g                     
+            = Nothing                           
+  =>    R.H.S = Nothing >>= (\x -> f x >>= g)     (using m = Nothing)
+            = Nothing  
+        So,                         
+        L.H.S = R.H.S
+    case2: m = Just a,
+  =>    L.H.S = (Just a >>= f) >>= g              (using m = Just a)
+            = (f a) >>= g                       
+  =>    R.H.S = Just a >>= (\x -> f x >>= g)    (using m = Just a)
+            = (\x -> f x >>= g) a               
+            = (f a) >>= g 
+        So,                      
+        L.H.S = R.H.S
+ So,
+ L.H.S = R.H.S for both cases
+ Hence, Proved
