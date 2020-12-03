@@ -1,0 +1,75 @@
+Name: Mihir Jewalikar
+Roll no. : 170387
+Homework : 4
+Question : 2
+I will use the similar methods as in Q1
+We need to prove that maybe  follows 3 monad laws
+1)Right Identity
+2)Left Identity
+3)Associativity
+(I was only able to prove 2 laws, 1st and 2nd)
+Monad functions for the maybe monad are:
+1)return x = [x]
+It has the following type:
+        return :: a -> [a]
+        
+2)m >>= f = concat (fmap f m)
+It has the following type:
+        (>>=) :: [a] -> (a -> [b]) -> [b]
+        
+Where, concat and fmap are:
+1)
+    concat [] = []
+    concat (x : xs) = x ++ (concat xs)
+2)
+    fmap f [] = []
+    fmap f (x : xs) = (f x) : (fmap f xs)
+3)
+(++) is defined as :
+    [] ++ ys = ys
+    (x : xs) ++ ys = x : (xs ++ ys)
+
+
+
+
+2) Left identity
+-->   (return a >>= f) = (f a)
+Proof:
+    L.H.S = return a >>= f
+        = [a] >>= f                     
+        = concat (fmap f [a])           
+        = concat [f a]                  
+        = f a                           
+        = R.H.S
+    So,
+    L.H.S=R.H.S
+    Hence, Proved
+    
+1)Right identity
+--> (m >>= return) = (m)
+Proof: Proof by induction
+       Induction on LenList(m) i.e. Length of list m.
+       
+    (i) Base case: LenList(m)=0 i.e. m=[]
+  --> L.H.S = [] >>= return			(Using m=[])
+            = concat (fmap return [])           
+            = concat []                       
+            = []                                            
+            = m
+            = R.H.S
+    (ii) Inductive step: m = (x : xs), 
+    Let, LenList(m)=n
+    From induction, Right identity True whenever LenList(y) < n ,for any y.
+  --> L.H.S = (x : xs) >>= return		(Using m=(x:xs))
+            = concat (fmap return (x : xs))                 
+            = concat (return x : fmap return xs)            
+            = (return x) ++ (concat (fmap return xs))      
+            = (return x) ++ (xs >>= return)                 
+            = (return x) ++ xs                       (From induction (as LenList(xs)<LenList((x:xs)))       
+            = [x] ++ xs                                     
+            = (x : xs)                                      
+            = m
+            = R.H.S
+    So,
+    L.H.S=R.H.S always
+    Hence, Proved
